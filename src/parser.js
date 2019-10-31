@@ -47,6 +47,7 @@ const start = async () => {
     while (newHouserooms.length > 0) {
       const houseroom = newHouserooms.shift();
       await sendVk(`
+      ======================================
         ${houseroom.innerText}
 
         ${houseroom.url}

@@ -8,15 +8,11 @@
 
 ````
 {
-  "users": [
-    {
-      "vk": "11111111"
-    }
-  ],
+  "users": ["11111111"],    // vk user ids
   "isSilentMode": true  // Hide Puppeteer browser window
 }
 ````
-* Allow vk group send messages to user from config.json
+* Allow vk group send messages to user from config.json. Vk group id 7037811
 
 `How to start`
 -
