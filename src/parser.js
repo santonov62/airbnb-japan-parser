@@ -24,9 +24,19 @@ const start = async () => {
     await page.goto(url, {waitUntil: 'domcontentloaded'});
     log('done');
   
-    log(`[gowaitForto]: #FMP-target>div>div>div>div>div`);
-    await page.waitFor('#FMP-target>div>div>div>div>div', {visible: true});
-    let parsedHouserooms = await page.$$eval('#FMP-target>div>div>div>div>div', divs => {
+    // log(`[waitFor]: #FMP-target>div>div>div>div>div`);
+    // await page.waitFor('#FMP-target>div>div>div>div>div', {visible: true});
+    // let parsedHouserooms = await page.$$eval('#FMP-target>div>div>div>div>div', divs => {
+    //   return divs.map(div => {
+    //     return {
+    //       innerText: div.innerText,
+    //       url: 'https://airbnb.com' + div.querySelector('a').getAttribute('href')
+    //     }
+    //   });
+    // });
+    log(`[waitFor]: [itemprop="itemListElement"]`);
+    await page.waitFor('[itemprop="itemListElement"]', {visible: true});
+    let parsedHouserooms = await page.$$eval('[itemprop="itemListElement"]', divs => {
       return divs.map(div => {
         return {
           innerText: div.innerText,
@@ -37,7 +47,7 @@ const start = async () => {
     const newHouserooms = parsedHouserooms.filter(parsedHouseroom => {
       return !houserooms.some(houseroom => houseroom.innerText === parsedHouseroom.innerText);
     });
-    log('newHouserooms ', newHouserooms);
+    log('newHouserooms ', newHouserooms.length);
     
     houserooms = houserooms.concat(newHouserooms);
     log('Houserooms ', houserooms.length);
@@ -47,7 +57,7 @@ const start = async () => {
     while (newHouserooms.length > 0) {
       const houseroom = newHouserooms.shift();
       await sendVk(`
-      ======================================
+      ============================
         ${houseroom.innerText}
 
         ${houseroom.url}
@@ -57,7 +67,7 @@ const start = async () => {
   } catch (e) {
     log(`[start][error]`, e.message);
   } finally {
-    browser.close();
+    // browser.close();
   }
 };
 

@@ -12,7 +12,7 @@
   "isSilentMode": true  // Hide Puppeteer browser window
 }
 ````
-* Allow vk group send messages to user from config.json. Vk group id 7037811
+* Allow vk group send messages to user from config.json. Vk group https://vk.com/public183947186
 
 `How to start`
 -
