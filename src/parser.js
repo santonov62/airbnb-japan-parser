@@ -67,7 +67,7 @@ const start = async () => {
   } catch (e) {
     log(`[start][error]`, e.message);
   } finally {
-    // browser.close();
+    browser.close();
   }
 };
 
