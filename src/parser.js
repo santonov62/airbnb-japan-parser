@@ -38,14 +38,17 @@ const start = async () => {
     await page.waitFor('[itemprop="itemListElement"]', {visible: true});
     let parsedHouserooms = await page.$$eval('[itemprop="itemListElement"]', divs => {
       return divs.map(div => {
+        const url = 'https://airbnb.com' + div.querySelector('a').getAttribute('href');
+        const id = url.split('?').shift().split('/').pop();
         return {
           innerText: div.innerText,
-          url: 'https://airbnb.com' + div.querySelector('a').getAttribute('href')
+          url,
+          id
         }
       });
     });
     const newHouserooms = parsedHouserooms.filter(parsedHouseroom => {
-      return !houserooms.some(houseroom => houseroom.innerText === parsedHouseroom.innerText);
+      return !houserooms.some(houseroom => houseroom.id === parsedHouseroom.id);
     });
     log('newHouserooms ', newHouserooms.length);
     
@@ -57,9 +60,8 @@ const start = async () => {
     while (newHouserooms.length > 0) {
       const houseroom = newHouserooms.shift();
       await sendVk(`
-      ============================
+      ======${houseroom.id}======
         ${houseroom.innerText}
-
         ${houseroom.url}
       `);
     }
